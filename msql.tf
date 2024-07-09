@@ -8,12 +8,13 @@ resource "aws_db_instance" "mysql" {
   db_name              = "mydatabase"
   username             = "admin"
   password             = "password"
-  multi_az             = true
+  multi_az             = false
   parameter_group_name = aws_db_parameter_group.mysql.name
   skip_final_snapshot  = true
   publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   db_subnet_group_name = aws_db_subnet_group.default.id
+  subnet_id = aws_subnet.public_1.id
 
   tags = {
     Name = "mysql-database"
