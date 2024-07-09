@@ -1,3 +1,8 @@
+provider "aws" {
+  region  = "us-west-2"
+  version = "~> 5.0"
+}
+
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
@@ -110,6 +115,19 @@ resource "aws_route_table" "private" {
   }
 }
 
+resource "aws_route_table" "vpn" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_vpn_gateway.main.id
+  }
+
+  tags = {
+    Name = "vpn-route-table"
+  }
+}
+
 resource "aws_route_table_association" "public_1" {
   subnet_id      = aws_subnet.public_1.id
   route_table_id = aws_route_table.public.id
@@ -140,6 +158,21 @@ resource "aws_route_table_association" "private_3" {
   route_table_id = aws_route_table.private.id
 }
 
+resource "aws_route_table_association" "private_vpn_1" {
+  subnet_id      = aws_subnet.private_1.id
+  route_table_id = aws_route_table.vpn.id
+}
+
+resource "aws_route_table_association" "private_vpn_2" {
+  subnet_id      = aws_subnet.private_2.id
+  route_table_id = aws_route_table.vpn.id
+}
+
+resource "aws_route_table_association" "private_vpn_3" {
+  subnet_id      = aws_subnet.private_3.id
+  route_table_id = aws_route_table.vpn.id
+}
+
 resource "aws_vpn_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -166,12 +199,6 @@ resource "aws_customer_gateway" "main" {
   tags = {
     Name = "main-customer-gateway"
   }
-}
-
-resource "aws_route" "vpn_route" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_vpn_gateway.main.id
 }
 
 resource "aws_route53_zone" "main" {
