@@ -18,13 +18,6 @@ resource "aws_db_instance" "mysql" {
   tags = {
     Name = "mysql-database"
   }
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
-      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
-    EOT
-  }
 }
 
 resource "aws_db_parameter_group" "mysql" {
