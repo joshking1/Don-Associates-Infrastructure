@@ -3,7 +3,7 @@ resource "aws_db_instance" "mysql" {
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"
-  engine_version       = "5.7.31""
+  engine_version       = "5.7.31"
   instance_class       = "db.t3.micro"
   db_name              = "mydatabase"
   username             = "admin"
@@ -18,6 +18,13 @@ resource "aws_db_instance" "mysql" {
   tags = {
     Name = "mysql-database"
   }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
+      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
+    EOT
+  }
 }
 
 resource "aws_db_parameter_group" "mysql" {
@@ -30,17 +37,7 @@ resource "aws_db_parameter_group" "mysql" {
   }
 }
 
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
-      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
-    EOT
-  }
-}
-
-# Creating RDS Instance sebnet group
-
+# Creating RDS Instance subnet group
 resource "aws_db_subnet_group" "default" {
   name       = "main"
   subnet_ids = [
@@ -54,10 +51,10 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 
-
 output "db_endpoint" {
   value = aws_db_instance.mysql.endpoint
 }
+
 
 
 
