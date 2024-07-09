@@ -27,14 +27,20 @@ resource "aws_db_instance" "mysql" {
 }
 
 # Creating RDS Instance
+
 resource "aws_db_subnet_group" "default" {
   name       = "main"
-  subnet_ids = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id]
+  subnet_ids = [
+    aws_subnet.public_1.id,
+    aws_subnet.public_2.id,
+    aws_subnet.public_3.id
+  ]
 
   tags = {
     Name = "My DB subnet group"
   }
 }
+
 
 output "db_endpoint" {
   value = aws_db_instance.mysql.endpoint
