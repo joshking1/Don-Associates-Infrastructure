@@ -1,11 +1,14 @@
 #!/bin/bash
-# Update configuration.sh for Web Server
-
+# Update package lists
 apt-get update
-apt-get install -y apache2 wget php php-mysql
-# Download Lab files
+
+# Install necessary packages
+apt-get install -y apache2 wget php php-mysql mysql-client
+
+# Download lab files
 wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
 unzip lab-app.zip -d /var/www/html/
+
 # Create a simple registration form
 cat <<EOF > /var/www/html/index.php
 <!DOCTYPE html>
@@ -59,6 +62,11 @@ if (\$_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 EOF
 
+# Create the database and table
+mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
+mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
+
 # Turn on web server
 systemctl enable apache2
 systemctl start apache2
+
