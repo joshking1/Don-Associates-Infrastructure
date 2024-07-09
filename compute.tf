@@ -1,6 +1,5 @@
 # ubuntu server data 
 
-# Ubuntu server data 
 data "aws_ami" "ubuntu_server" {
   most_recent = true
 
@@ -28,7 +27,7 @@ resource "aws_instance" "web_server" {
     Name = "WebServer"
   }
 
-  user_data = templatefile("${configuration2.sh.tpl", {
+  user_data = templatefile("${path.module}/configuration2.sh.tpl", {
     db_endpoint = aws_db_instance.mysql.endpoint
   })
 
@@ -137,4 +136,3 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
