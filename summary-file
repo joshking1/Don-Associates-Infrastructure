@@ -3,4 +3,8 @@ msql.tf: Creates the database and users table, and ensures the database is acces
 Application Flow:
 Students access the registration form on the web server.
 The form data is submitted to register.php, which processes the data and stores it in the database.
-This setup will provide a simple application for student registration with the data being stored securely in a MySQL database. Make sure to replace placeholder values like "your_database_endpoint" with actual values from your Terraform outputs.
+This setup will provide a simple application for student registration with the data being stored securely in a MySQL database. 
+Make sure to replace placeholder values like "your_database_endpoint" with actual values from your Terraform outputs.
+variable "db_endpoint" {
+  description = "Database endpoint"
+}
