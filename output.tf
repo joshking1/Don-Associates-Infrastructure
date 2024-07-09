@@ -3,5 +3,6 @@ output "public_ip" {
 }
 
 output "load_balancer_dns" {
-  value = aws_lb.app_lb.dns_name
+  value = aws_lb.external-alb.dns_name
 }
+
