@@ -175,7 +175,7 @@ resource "aws_route" "vpn_route" {
 }
 
 resource "aws_route53_zone" "main" {
-  name = "example.com"
+  name = "mydomain.com"
 }
 
 resource "aws_route53_record" "www" {
