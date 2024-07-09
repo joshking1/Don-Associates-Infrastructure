@@ -208,8 +208,11 @@ resource "aws_route53_record" "www" {
   name    = "www"
   type    = "A"
   ttl     = "300"
-  records = [aws_lb.app_lb.dns_name]
+  records = [aws_lb.external-alb.dns_name]
+
+  depends_on = [aws_lb.external-alb]
 }
+
 
 resource "aws_route53_record" "app" {
   zone_id = aws_route53_zone.main.zone_id
