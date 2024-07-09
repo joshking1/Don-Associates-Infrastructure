@@ -1,4 +1,4 @@
-# DataBase
+# DataBase-New 
 resource "aws_db_instance" "mysql" {
   allocated_storage    = 20
   storage_type         = "gp2"
