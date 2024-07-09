@@ -14,7 +14,6 @@ resource "aws_db_instance" "mysql" {
   publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   db_subnet_group_name = aws_db_subnet_group.default.id
-  subnet_id = aws_subnet.public_1.id
 
   tags = {
     Name = "mysql-database"
