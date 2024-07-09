@@ -18,6 +18,7 @@ resource "aws_db_instance" "mysql" {
   tags = {
     Name = "mysql-database"
   }
+}
 
 resource "aws_db_parameter_group" "mysql" {
   name   = "mysql-parameter-group"
