@@ -1,3 +1,4 @@
+# These are the key pair values
 region               = "us-east-2"
 environment          = "Production-Enterprise-Development"
 vpc_cidr             = "10.0.0.0/16"
