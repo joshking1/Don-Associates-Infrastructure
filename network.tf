@@ -33,9 +33,10 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_subnet" "public_1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subnet_1_cidr
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_1_cidr
   map_public_ip_on_launch = true
+  availability_zone = "us-east-2a"  # Specify the AZ
 
   tags = {
     Name = "public-subnet-1"
@@ -43,9 +44,10 @@ resource "aws_subnet" "public_1" {
 }
 
 resource "aws_subnet" "public_2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subnet_2_cidr
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_2_cidr
   map_public_ip_on_launch = true
+  availability_zone = "us-east-2b"  # Specify the AZ
 
   tags = {
     Name = "public-subnet-2"
@@ -53,9 +55,10 @@ resource "aws_subnet" "public_2" {
 }
 
 resource "aws_subnet" "public_3" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subnet_3_cidr
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.public_subnet_3_cidr
   map_public_ip_on_launch = true
+  availability_zone = "us-east-2c"  # Specify the AZ
 
   tags = {
     Name = "public-subnet-3"
