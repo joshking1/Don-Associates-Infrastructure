@@ -1,0 +1,42 @@
+resource "aws_db_instance" "mysql" {
+  allocated_storage    = 20
+  storage_type         = "gp2"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t2.micro"
+  name                 = "mydatabase"
+  username             = "admin"
+  password             = "password"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+  publicly_accessible  = false
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  db_subnet_group_name = aws_db_subnet_group.main.name
+
+  tags = {
+    Name = "mysql-database"
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
+      mysql -h ${self.endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
+    EOT
+  }
+}
+
+resource "aws_db_subnet_group" "main" {
+  name       = "main"
+  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id, aws_subnet.private_3.id]
+
+  tags = {
+    Name = "main-subnet-group"
+  }
+}
+
+output "db_endpoint" {
+  value = aws_db_instance.mysql.endpoint
+}
+
+
+
