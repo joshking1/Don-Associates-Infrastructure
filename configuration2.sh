@@ -1,7 +1,8 @@
 #!/bin/bash
 # Update configuration.sh for Web Server
 
-dnf install -y httpd wget php php-mysqli
+apt-get update
+apt-get install -y apache2 wget php php-mysql
 # Download Lab files
 wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
 unzip lab-app.zip -d /var/www/html/
@@ -59,5 +60,5 @@ if (\$_SERVER["REQUEST_METHOD"] == "POST") {
 EOF
 
 # Turn on web server
-chkconfig httpd on
-service httpd start
+systemctl enable apache2
+systemctl start apache2
