@@ -26,7 +26,7 @@ resource "aws_db_instance" "mysql" {
   }
 }
 
-# Creating RDS Instance
+# Creating RDS Instance sebnet group
 
 resource "aws_db_subnet_group" "default" {
   name       = "main"
