@@ -53,6 +53,3 @@ variable "keyname" {
   default = "three-tier-app"
 }
 
-variable "db_endpoint" {
-  description = "Database endpoint"
-}
