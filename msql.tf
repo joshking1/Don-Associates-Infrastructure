@@ -7,11 +7,12 @@ resource "aws_db_instance" "mysql" {
   db_name                 = "mydatabase"
   username             = "admin"
   password             = "password"
+  multi_az               = true
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
   publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  db_subnet_group_name = aws_db_subnet_group.main.name
+  db_subnet_group_name = aws_db_subnet_group.default.id
 
   tags = {
     Name = "mysql-database"
@@ -25,12 +26,13 @@ resource "aws_db_instance" "mysql" {
   }
 }
 
-resource "aws_db_subnet_group" "main" {
+# Creating RDS Instance
+resource "aws_db_subnet_group" "default" {
   name       = "main"
-  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id, aws_subnet.private_3.id]
+  subnet_ids = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id]
 
   tags = {
-    Name = "main-subnet-group"
+    Name = "My DB subnet group"
   }
 }
 
