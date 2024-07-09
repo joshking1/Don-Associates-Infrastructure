@@ -1,24 +1,6 @@
 # ubuntu server data 
 
-data "aws_ami" "ubuntu_server" {
-  most_recent = true
-
-  filter {
-    name = "name"
-    #values = ["ubuntu/images/hvm-ssd/ubuntu-disco-19.04-amd64-server-*"]
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-# All instances must be ubuntu 
-
+# Ubuntu server data 
 data "aws_ami" "ubuntu_server" {
   most_recent = true
 
@@ -95,7 +77,7 @@ resource "aws_security_group" "web_sg" {
 }
 
 resource "aws_instance" "app_server_1" {
-  ami           = "${data.aws_ami.ubuntu_server.id}"
+  ami           = data.aws_ami.ubuntu_server.id
   instance_type = var.instance_type
   key_name      = var.keyname
   subnet_id     = aws_subnet.private_1.id
@@ -109,7 +91,7 @@ resource "aws_instance" "app_server_1" {
 }
 
 resource "aws_instance" "app_server_2" {
-  ami           = "${data.aws_ami.ubuntu_server.id}"
+  ami           = data.aws_ami.ubuntu_server.id
   instance_type = var.instance_type
   key_name      = var.keyname
   subnet_id     = aws_subnet.private_2.id
@@ -123,7 +105,7 @@ resource "aws_instance" "app_server_2" {
 }
 
 resource "aws_instance" "app_server_3" {
-  ami           = "${data.aws_ami.ubuntu_server.id}"
+  ami           = data.aws_ami.ubuntu_server.id
   instance_type = var.instance_type
   key_name      = var.keyname
   subnet_id     = aws_subnet.private_3.id
@@ -155,3 +137,4 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
