@@ -1,6 +1,8 @@
 #!/bin/bash
 # Update package lists
-apt-get update
+
+sudo apt-get update
+sudo apt-get upgrade -y 
 
 # Install necessary packages
 apt-get install -y apache2 wget php php-mysql mysql-client
