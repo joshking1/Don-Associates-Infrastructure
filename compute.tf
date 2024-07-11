@@ -27,7 +27,7 @@ resource "aws_instance" "web_server" {
     Name = "WebServer"
   }
 
-  user_data = templatefile("${configuration2.sh.tpl", {
+  user_data = templatefile("${path.module}/configuration2.sh.tpl", {
     db_endpoint = aws_db_instance.mysql.endpoint
   })
 
@@ -40,7 +40,7 @@ resource "aws_instance" "web_server_2" {
   key_name      = var.keyname
   subnet_id     = aws_subnet.public_2.id        # we are going to add this in public_2 subnet
   security_groups = [aws_security_group.web_sg.id]
-  user_data   = "${file("nginx.sh")}"
+  user_data      = file("nginx.sh")
 
   tags = {
     Name = "WebServer-2"
@@ -99,7 +99,7 @@ resource "aws_instance" "app_server_1" {
     Name = "AppServer1"
   }
 
-  #user_data = file("configuration.sh")
+  # user_data = file("configuration.sh")
 }
 
 resource "aws_instance" "app_server_2" {
@@ -113,7 +113,7 @@ resource "aws_instance" "app_server_2" {
     Name = "AppServer2"
   }
 
-  #user_data = file("configuration.sh")
+  # user_data = file("configuration.sh")
 }
 
 resource "aws_instance" "app_server_3" {
@@ -127,7 +127,7 @@ resource "aws_instance" "app_server_3" {
     Name = "AppServer3"
   }
 
-  #user_data = file("configuration.sh")
+  # user_data = file("configuration.sh")
 }
 
 resource "aws_security_group" "app_sg" {
@@ -149,3 +149,4 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
