@@ -45,9 +45,16 @@ resource "aws_lb_listener" "app_listener" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "web_instance" {
+resource "aws_lb_target_group_attachment" "web_instance_1" {
   target_group_arn = aws_lb_target_group.app_tg.arn
-  target_id        = [ aws_instance.web_server.id, aws_instance.web_server_2.id ]
+  target_id        = aws_instance.web_server.id
   port             = 80
 }
+
+resource "aws_lb_target_group_attachment" "web_instance_2" {
+  target_group_arn = aws_lb_target_group.app_tg.arn
+  target_id        = aws_instance.web_server_2.id
+  port             = 80
+}
+
 
