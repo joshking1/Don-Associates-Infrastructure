@@ -1,13 +1,16 @@
 #!/bin/bash
 # Update package lists
+
 apt-get update
 
+apt-get upgrade -y 
+
 # Install necessary packages
+
 apt-get install -y apache2 wget php php-mysql mysql-client
 
-# Change Apache to listen on port 8080 instead of 80
-sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
-sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
+# Ensure Apache listens on port 80 (no changes needed if it's already configured for port 80)
+# Remove the lines that change Apache to listen on port 8080
 
 # Reload Apache configuration
 systemctl restart apache2
@@ -76,6 +79,7 @@ mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE T
 # Enable and start Apache web server
 systemctl enable apache2
 systemctl restart apache2
+
 
 
 
