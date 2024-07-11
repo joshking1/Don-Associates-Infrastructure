@@ -34,6 +34,18 @@ resource "aws_instance" "web_server" {
   depends_on = [aws_db_instance.mysql]
 }
 
+resource "aws_instance" "web_server_2" {
+  ami           = data.aws_ami.ubuntu_server.id
+  instance_type = var.instance_type
+  key_name      = var.keyname
+  subnet_id     = aws_subnet.public_1.id
+  security_groups = [aws_security_group.web_sg.id]
+
+  tags = {
+    Name = "WebServer-2"
+  }
+}
+
 resource "aws_security_group" "web_sg" {
   name_prefix = "web-sg-"
   description = "Allow web and database traffic"
