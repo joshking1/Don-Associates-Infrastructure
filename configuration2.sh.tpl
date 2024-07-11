@@ -1,19 +1,21 @@
 #!/bin/bash
-# Update package lists
 
+# Update package lists
 apt-get update
 
-apt-get upgrade -y 
-
 # Install necessary packages
+apt-get install -y apache2 wget php libapache2-mod-php php-mysql mysql-client unzip
 
-apt-get install -y apache2 wget php php-mysql mysql-client
+# Enable PHP module
+a2enmod php7.4
 
-# Ensure Apache listens on port 80 (no changes needed if it's already configured for port 80)
-# Remove the lines that change Apache to listen on port 8080
-
-# Reload Apache configuration
+# Restart Apache to apply changes
 systemctl restart apache2
+
+# Remove the default Apache index.html if it exists
+if [ -f /var/www/html/index.html ]; then
+    rm /var/www/html/index.html
+fi
 
 # Download lab files
 wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
@@ -79,6 +81,8 @@ mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE T
 # Enable and start Apache web server
 systemctl enable apache2
 systemctl restart apache2
+
+
 
 
 
