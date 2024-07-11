@@ -27,7 +27,7 @@ resource "aws_nat_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
-  associate_with_private_ip = aws_instance.nat.private_ip
+  vpc = true
 }
 
 # Subnets
