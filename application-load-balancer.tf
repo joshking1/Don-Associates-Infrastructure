@@ -1,4 +1,4 @@
-# Creating External LoadBalancer
+# Creating External LoadBalancer with two webservers. Nginx and Apache2 
 
 resource "aws_lb" "external-alb" {
   name               = "external-alb"
