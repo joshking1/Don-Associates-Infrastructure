@@ -24,14 +24,14 @@ resource "aws_nat_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
-  vpc = true
+  associate_with_private_ip = aws_instance.nat.private_ip
 }
 
 resource "aws_subnet" "public_1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_1_cidr
   map_public_ip_on_launch = true
-  availability_zone = "us-east-2a"  # Specify the AZ
+  availability_zone = "us-east-2a"
 
   tags = {
     Name = "public-subnet-1"
@@ -42,7 +42,7 @@ resource "aws_subnet" "public_2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_2_cidr
   map_public_ip_on_launch = true
-  availability_zone = "us-east-2b"  # Specify the AZ
+  availability_zone = "us-east-2b"
 
   tags = {
     Name = "public-subnet-2"
@@ -53,7 +53,7 @@ resource "aws_subnet" "public_3" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_3_cidr
   map_public_ip_on_launch = true
-  availability_zone = "us-east-2c"  # Specify the AZ
+  availability_zone = "us-east-2c"
 
   tags = {
     Name = "public-subnet-3"
@@ -191,7 +191,7 @@ resource "aws_vpn_connection" "main" {
 
 resource "aws_customer_gateway" "main" {
   bgp_asn = 65000
-  ip_address = "203.0.113.12"  # Replace with your on-premises IP address
+  ip_address = "203.0.113.12"
   type = "ipsec.1"
 
   tags = {
@@ -206,13 +206,12 @@ resource "aws_route53_zone" "main" {
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.main.zone_id
   name    = "www"
-  type    = "A"
+  type    = "CNAME"
   ttl     = "300"
   records = [aws_lb.external-alb.dns_name]
 
   depends_on = [aws_lb.external-alb]
 }
-
 
 resource "aws_route53_record" "app" {
   zone_id = aws_route53_zone.main.zone_id
