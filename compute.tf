@@ -27,7 +27,7 @@ resource "aws_instance" "web_server" {
     Name = "WebServer"
   }
 
-  user_data = templatefile("${path.module}/configuration2.sh.tpl", {
+  user_data = templatefile("configuration2.sh.tpl", {
     db_endpoint = aws_db_instance.mysql.endpoint
   })
 
