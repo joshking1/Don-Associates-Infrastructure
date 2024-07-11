@@ -1,4 +1,4 @@
-# ubuntu server data 
+# ubuntu server data in AWS Cloud
 
 data "aws_ami" "ubuntu_server" {
   most_recent = true
