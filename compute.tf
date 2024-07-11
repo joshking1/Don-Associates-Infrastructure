@@ -40,7 +40,7 @@ resource "aws_instance" "web_server_2" {
   key_name      = var.keyname
   subnet_id     = aws_subnet.public_2.id        # we are going to add this in public_2 subnet
   security_groups = [aws_security_group.web_sg.id]
-  user_data   = file(${nginx.sh})
+  user_data   = "${file("nginx.sh")}"
 
   tags = {
     Name = "WebServer-2"
