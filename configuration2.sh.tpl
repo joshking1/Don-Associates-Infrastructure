@@ -1,8 +1,6 @@
 #!/bin/bash
 # Update package lists
-
-sudo apt-get update
-sudo apt-get upgrade -y 
+apt-get update
 
 # Install necessary packages
 apt-get install -y apache2 wget php php-mysql mysql-client
@@ -10,6 +8,9 @@ apt-get install -y apache2 wget php php-mysql mysql-client
 # Change Apache to listen on port 8080 instead of 80
 sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
 sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
+
+# Reload Apache configuration
+systemctl restart apache2
 
 # Download lab files
 wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
@@ -72,8 +73,9 @@ EOF
 mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "CREATE DATABASE IF NOT EXISTS mydatabase;"
 mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL);"
 
-# Turn on web server
+# Enable and start Apache web server
 systemctl enable apache2
-systemctl start apache2
+systemctl restart apache2
+
 
 
