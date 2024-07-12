@@ -21,31 +21,37 @@ fi
 wget https://aws-tc-largeobjects.s3.us-west-2.amazonaws.com/CUR-TF-100-ACCLFO-2/2-lab2-vpc/s3/lab-app.zip
 unzip lab-app.zip -d /var/www/html/
 
-# Create the financial company front page with new client registration and all requested features
+# Create the company front page with new client registration and all requested features
 cat <<EOF > /var/www/html/index.php
 <!DOCTYPE html>
 <html>
 <head>
   <title>SHEILA TRUCKS AND LOGISTICS</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-    header { background: #003366; color: white; padding: 1em 0; text-align: center; }
-    nav { text-align: center; margin: 1em 0; }
-    nav a { margin: 0 1em; text-decoration: none; color: #003366; }
-    .container { padding: 2em; }
-    .section { margin: 2em 0; padding: 1em; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .form-container { display: flex; justify-content: space-between; align-items: center; }
-    .form-container form { display: inline-block; }
-    footer { background: #003366; color: white; text-align: center; padding: 1em 0; }
+    body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    header { background: #004080; color: white; padding: 20px 0; text-align: center; }
+    nav { text-align: center; margin: 20px 0; }
+    nav a { margin: 0 15px; text-decoration: none; color: #004080; font-weight: bold; }
+    .container { padding: 30px; }
+    .section { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+    .form-container { display: flex; justify-content: flex-end; align-items: center; margin: 0 2em; }
+    .form-container form { display: inline-block; margin: 0 10px; }
+    footer { background: #004080; color: white; text-align: center; padding: 20px 0; }
     img.logo { width: 150px; }
+    button { padding: 10px 20px; background: #004080; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #003366; }
+    h2 { color: #004080; }
+    a.button-link { display: inline-block; padding: 10px 20px; background: #004080; color: white; border-radius: 5px; text-decoration: none; }
+    a.button-link:hover { background: #003366; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
     <div>
       <img src="Logo for the company.JPG" alt="Company Logo" class="logo">
       <h2>Welcome to SHEILA TRUCKS AND LOGISTICS</h2>
-      <p>Director of Trading and Financial Instruments: Josh Wahome</p>
+      <p>Director of Operations: Sheila Wanjiru</p>
       <p>Address: 1 Earhart Dr, Coatesville, PA 19320</p>
       <p>Hours: Closed ⋅ Opens 9 AM Fri</p>
       <p>Phone: (917) 746-1193</p>
@@ -83,7 +89,7 @@ cat <<EOF > /var/www/html/index.php
     <div id="appointments" class="section">
       <h2>Appointment Scheduling</h2>
       <p>Scheduling an appointment with us is easy and convenient. Whether you need financial advice, investment planning, or any other financial service, you can book your appointment online or by calling our office. Our advisors are available to meet with you at a time that works best for you. We look forward to assisting you with your financial needs.</p>
-      <p><a href="appointments.php">Schedule your appointment online</a></p>
+      <p><a href="appointments.php" class="button-link">Schedule your appointment online</a></p>
     </div>
     <div id="contact" class="section">
       <h2>Contact Us</h2>
@@ -92,7 +98,7 @@ cat <<EOF > /var/www/html/index.php
     <div id="client-portal" class="section">
       <h2>Client Portal</h2>
       <p>Our client portal provides you with secure access to your financial statements, investment reports, and other important documents. You can manage your account, track your investments, and stay informed about your financial status anytime, anywhere. Our client portal is designed to provide you with the convenience and transparency you need to stay on top of your finances.</p>
-      <p><a href="client-portal.php">Access your financial statements and reports</a></p>
+      <p><a href="client-portal.php" class="button-link">Access your financial statements and reports</a></p>
     </div>
     <div id="news" class="section">
       <h2>News and Announcements</h2>
@@ -129,15 +135,16 @@ cat <<EOF > /var/www/html/signup.php
 <head>
   <title>Sign Up</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-    .container { width: 300px; margin: 50px auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h2 { text-align: center; }
+    body { font-family: 'Roboto', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    .container { width: 300px; margin: 50px auto; background: white; padding: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.1); border-radius: 10px; }
+    h2 { text-align: center; color: #004080; }
     form { display: flex; flex-direction: column; }
-    label { margin: 10px 0 5px; }
-    input { padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-    button { padding: 10px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #005bb5; }
+    label { margin: 10px 0 5px; color: #004080; }
+    input { padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px; background: #004080; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #003366; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -166,15 +173,16 @@ cat <<EOF > /var/www/html/login.php
 <head>
   <title>Login</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-    .container { width: 300px; margin: 50px auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h2 { text-align: center; }
+    body { font-family: 'Roboto', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    .container { width: 300px; margin: 50px auto; background: white; padding: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.1); border-radius: 10px; }
+    h2 { text-align: center; color: #004080; }
     form { display: flex; flex-direction: column; }
-    label { margin: 10px 0 5px; }
-    input { padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-    button { padding: 10px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #005bb5; }
+    label { margin: 10px 0 5px; color: #004080; }
+    input { padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px; background: #004080; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #003366; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -235,3 +243,5 @@ mysql -h ${db_endpoint} -P 3306 -u admin -ppassword -e "USE mydatabase; CREATE T
 # Enable and start Apache web server
 systemctl enable apache2
 systemctl restart apache2
+
+
